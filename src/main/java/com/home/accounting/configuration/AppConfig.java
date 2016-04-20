@@ -1,5 +1,6 @@
 package com.home.accounting.configuration;
 
+
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -22,7 +24,9 @@ import java.util.Properties;
 @ComponentScan("com.home.accounting")
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
-@EnableJpaRepositories("com.home.accounting.repository")
+/*@EnableJpaRepositories("com.home.accounting.repository")*/
+@EnableJpaRepositories
+@EnableTransactionManagement
 public class AppConfig {
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
@@ -34,6 +38,46 @@ public class AppConfig {
         return resolver;
     }
 
+   /* @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory
+            (DataSource dataSource, JpaVendorAdapter jpaVendeorAdapter) {
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(dataSource);
+        entityManagerFactory.setJpaVendorAdapter(jpaVendeorAdapter);
+        entityManagerFactory.setPackagesToScan("com.home.accounting");
+        return entityManagerFactory;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
+    }
+
+    @Bean
+    public JpaVendorAdapter jpaVendorAdapter() {
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setShowSql(true);
+        adapter.setGenerateDdl(true);
+        adapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
+
+        return adapter;
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("com.mysql.jdbc.Driver");
+        ds.setUrl("jdbc:mysql://localhost:3306/homeAccounting");
+        ds.setUsername("root");
+        ds.setPassword("root");
+
+        return ds;
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        return new CommonsMultipartResolver();
+    }*/
 
     private static final String PROP_DATABASE_DRIVER = "db.driver";
     private static final String PROP_DATABASE_PASSWORD = "db.password";
@@ -46,6 +90,7 @@ public class AppConfig {
 
     @Resource
     private Environment env;
+
 
     @Bean
     public DataSource dataSource() {
@@ -71,7 +116,6 @@ public class AppConfig {
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
         return transactionManager;
     }
 
@@ -82,5 +126,4 @@ public class AppConfig {
         properties.put(PROP_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROP_HIBERNATE_HBM2DDL_AUTO));
         return properties;
     }
-
 }

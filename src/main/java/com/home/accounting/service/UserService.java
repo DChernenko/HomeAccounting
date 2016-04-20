@@ -1,6 +1,6 @@
 package com.home.accounting.service;
 
-import com.home.accounting.model.User;
+import com.home.accounting.entity.User;
 
 import java.util.List;
 

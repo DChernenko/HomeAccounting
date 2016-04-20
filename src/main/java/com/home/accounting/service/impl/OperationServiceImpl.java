@@ -1,6 +1,6 @@
 package com.home.accounting.service.impl;
 
-import com.home.accounting.model.Operation;
+import com.home.accounting.entity.Operation;
 import com.home.accounting.repository.OperationRepository;
 import com.home.accounting.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;

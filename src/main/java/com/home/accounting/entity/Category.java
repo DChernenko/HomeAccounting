@@ -1,4 +1,4 @@
-package com.home.accounting.model;
+package com.home.accounting.entity;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

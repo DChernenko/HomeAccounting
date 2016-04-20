@@ -1,8 +1,8 @@
 package com.home.accounting.service;
 
-import com.home.accounting.model.Account;
-import com.home.accounting.model.Operation;
-import com.home.accounting.model.User;
+import com.home.accounting.entity.Account;
+import com.home.accounting.entity.Operation;
+import com.home.accounting.entity.User;
 
 public interface AccountService {
 

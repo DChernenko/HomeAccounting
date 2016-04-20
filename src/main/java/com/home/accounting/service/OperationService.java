@@ -1,6 +1,6 @@
 package com.home.accounting.service;
 
-import com.home.accounting.model.Operation;
+import com.home.accounting.entity.Operation;
 
 import java.util.List;
 

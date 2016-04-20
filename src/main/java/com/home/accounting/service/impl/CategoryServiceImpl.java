@@ -1,6 +1,6 @@
 package com.home.accounting.service.impl;
 
-import com.home.accounting.model.Category;
+import com.home.accounting.entity.Category;
 import com.home.accounting.repository.CategoryRepository;
 import com.home.accounting.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

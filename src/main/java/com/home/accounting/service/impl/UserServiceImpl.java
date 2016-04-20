@@ -1,6 +1,6 @@
 package com.home.accounting.service.impl;
 
-import com.home.accounting.model.User;
+import com.home.accounting.entity.User;
 import com.home.accounting.repository.UserRepository;
 import com.home.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
