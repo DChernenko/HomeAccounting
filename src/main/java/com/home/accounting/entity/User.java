@@ -1,12 +1,6 @@
 package com.home.accounting.entity;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "authorizations")
@@ -15,29 +9,29 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
+    /*@NotEmpty*/
     @Column(name = "login")
     private String login;
 
-    @NotEmpty
+    /*@NotEmpty*/
     private String password;
 
-    @NotEmpty
+    /*@NotEmpty*/
     @Column(name = "full_name")
     private String fullName;
 
-    @NotEmpty
+    /*@NotEmpty
     @Max(150)
     @Min(16)
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 200)*/
     private Integer age;
 
-    @NotEmpty
-    @Email
+    /*@NotEmpty
+    @Email*/
     private String email;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "account_id", unique = true, nullable = false, updatable = false)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id", unique = true, nullable = true, updatable = true)
     private Account account;
 
     public User() {

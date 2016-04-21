@@ -1,5 +1,6 @@
 package com.home.accounting.configuration;
 
+import com.home.accounting.entity.Account;
 import com.home.accounting.entity.User;
 import com.home.accounting.service.AccountService;
 import com.home.accounting.service.CategoryService;
@@ -68,7 +69,13 @@ public class AppController {
         user.setFullName(fullName);
         user.setPassword(password);
         user.setLogin(login);
+        Account account = new Account();
+        user.setAccount(account);
+        account.setBalance(0);
+        account.setUser(user);
         userService.addUser(user);
+
+        accountService.addAccount(account);
         return "operations";
     }
 

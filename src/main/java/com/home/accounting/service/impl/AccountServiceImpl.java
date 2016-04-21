@@ -17,24 +17,23 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
 
-
     @Override
-    public void addAccount(Operation operation) {
-
+    public void addAccount(Account account) {
+        accountRepository.saveAndFlush(account);
     }
 
     @Override
     public void deleteAccount(long id) {
-
+        accountRepository.delete(id);
     }
 
     @Override
     public void editAccount(Account account) {
-
+        accountRepository.saveAndFlush(account);
     }
 
     @Override
     public void getBalance(User user) {
-
+        accountRepository.findOne(user.getAccount().getId());
     }
 }

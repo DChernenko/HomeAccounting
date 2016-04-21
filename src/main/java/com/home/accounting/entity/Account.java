@@ -1,7 +1,6 @@
 package com.home.accounting.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +12,14 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Min(value = 1)
+    /*@Min(value = 1)*/
     private double balance;
 
-    @OneToOne(optional = false, mappedBy = "account")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "account")
     private User user;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
     private List<Operation> operations = new ArrayList<Operation>();
 
     public Account() {
@@ -28,10 +27,6 @@ public class Account {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public double getBalance() {

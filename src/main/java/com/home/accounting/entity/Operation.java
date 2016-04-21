@@ -1,6 +1,5 @@
 package com.home.accounting.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
@@ -13,19 +12,19 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotEmpty
+    /*@NotEmpty*/
     private double sum;
 
-    @NotEmpty
+    /*@NotEmpty*/
     private LocalDate date;
 
-    @NotEmpty
+    /*@NotEmpty*/
     @Column(name = "flag_profit")
     private boolean flagProfit; /*profit - true, costs - false */
 
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "category_id", unique = true, nullable = false, updatable = false)
+    @JoinColumn(name = "category_id"/*, unique = true, nullable = false, updatable = false*/)
     private Category category;
 
 

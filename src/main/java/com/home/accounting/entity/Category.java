@@ -1,10 +1,6 @@
 package com.home.accounting.entity;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "categories")
@@ -13,9 +9,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotEmpty
-    @Min(value = 4)
-    @Max(value = 10)
+    /* @NotEmpty
+     @Min(value = 4)
+     @Max(value = 10)*/
     private String name;
 
     @OneToOne(mappedBy = "category")
@@ -27,10 +23,6 @@ public class Category {
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getName() {
