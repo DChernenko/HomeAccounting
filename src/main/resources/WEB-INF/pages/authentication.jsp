@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -16,9 +17,10 @@
 <div class="container" style="width: 300px;">
     <form action="/authentication_action" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control pagination" name="username" placeholder="Email address" required
+        <input type="text" class="form-control pagination" name="user_name" placeholder="Email address" required
                autofocus
                value="devcolibri">
+        <p style="color:red;">${errorMessage}</p>
         <input type="password" class="form-control pagination" name="password" placeholder="Password" required
                value="1234">
         <button class="btn btn-lg btn-primary btn-block pagination" type="submit">Войти</button>

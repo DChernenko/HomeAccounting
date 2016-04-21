@@ -15,35 +15,38 @@
 
 <div class="container" <%--style="width: 600px;"--%>>
     <h1>Registration form</h1>
-    <form class="form-horizontal" role="form" action="/add_user"  method="post" <%--style="width: 400px;"--%>>
+    <form class="form-horizontal" role="form" action="/add_user" method="post" <%--style="width: 400px;"--%>>
         <div class="form-group ">
             <label class="control-label col-sm-2 " for="login">Login:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="login" placeholder="Enter login" name="login">
+                <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" value="login">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2 " for="pwd">Password:</label>
             <div class="col-sm-10">
-                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password"
+                       value="login">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">Email:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                       value="login@gmail.com">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Name:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" placeholder="Enter full name" name="full_name">
+                <input type="text" class="form-control" id="name" placeholder="Enter full name" name="full_name"
+                       value="Petrych Petrych">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Age:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="age" placeholder="Enter age" name="age">
+                <input type="text" class="form-control" id="age" placeholder="Enter age" name="age" value="18">
             </div>
         </div>
         <div class="form-group">

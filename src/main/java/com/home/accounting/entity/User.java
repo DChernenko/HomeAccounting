@@ -6,41 +6,34 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "authorizations")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotEmpty
-    @Min(value = 4)
-    @Max(value = 10)
     @Column(name = "login")
     private String login;
 
     @NotEmpty
-    @Min(value = 4)
-    @Max(value = 10)
     private String password;
 
     @NotEmpty
-    @Min(value = 4)
-    @Max(value = 32)
     @Column(name = "full_name")
     private String fullName;
 
     @NotEmpty
-    @Min(value = 16)
-    @Max(value = 125)
-    @Column(length = 3)
-    private int age;
+    @Max(150)
+    @Min(16)
+    @Size(min = 1, max = 200)
+    private Integer age;
 
     @NotEmpty
     @Email
-    @Min(value = 10)
-    @Max(value = 32)
     private String email;
 
     @OneToOne(optional = false)
@@ -50,12 +43,8 @@ public class User {
     public User() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getLogin() {
@@ -82,11 +71,11 @@ public class User {
         this.fullName = fullName;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

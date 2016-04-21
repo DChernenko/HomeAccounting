@@ -6,7 +6,11 @@ import com.home.accounting.entity.User;
 import com.home.accounting.repository.AccountRepository;
 import com.home.accounting.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class AccountServiceImpl implements AccountService {
 
     @Autowired

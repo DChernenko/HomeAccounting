@@ -4,9 +4,13 @@ import com.home.accounting.entity.User;
 import com.home.accounting.repository.UserRepository;
 import com.home.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -23,8 +27,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserId(long id) {
+    public User findUserById(long id) {
         return userRepository.findOne(id);
+    }
+
+    @Override
+    public User findUserByName(String name) {
+        return userRepository.findUserByName(name);
     }
 
     @Override

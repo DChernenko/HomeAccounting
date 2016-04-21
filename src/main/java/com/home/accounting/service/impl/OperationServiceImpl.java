@@ -4,9 +4,12 @@ import com.home.accounting.entity.Operation;
 import com.home.accounting.repository.OperationRepository;
 import com.home.accounting.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Service
+@Transactional
 public class OperationServiceImpl implements OperationService {
     @Autowired
     private OperationRepository operationRepository;
