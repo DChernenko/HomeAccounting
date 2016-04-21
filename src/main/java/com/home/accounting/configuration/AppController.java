@@ -69,12 +69,11 @@ public class AppController {
         user.setFullName(fullName);
         user.setPassword(password);
         user.setLogin(login);
+//       user.setAccount(account);
+        userService.addUser(user);
         Account account = new Account();
-        user.setAccount(account);
         account.setBalance(0);
         account.setUser(user);
-        userService.addUser(user);
-
         accountService.addAccount(account);
         return "operations";
     }
@@ -86,6 +85,11 @@ public class AppController {
 
     @RequestMapping("/add_operation")
     public String addOperation(Model model) {
+        return "add_operation";
+    }
+
+    @RequestMapping("/operations")
+    public String operations(Model model) {
         return "add_operation";
     }
 
