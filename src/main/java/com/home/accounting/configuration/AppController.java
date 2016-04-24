@@ -1,6 +1,7 @@
 package com.home.accounting.configuration;
 
 import com.home.accounting.entity.Account;
+import com.home.accounting.entity.Category;
 import com.home.accounting.entity.User;
 import com.home.accounting.service.AccountService;
 import com.home.accounting.service.CategoryService;
@@ -9,7 +10,10 @@ import com.home.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -69,19 +73,56 @@ public class AppController {
         user.setFullName(fullName);
         user.setPassword(password);
         user.setLogin(login);
-//       user.setAccount(account);
         userService.addUser(user);
         Account account = new Account();
+        user.setAccount(account);
         account.setBalance(0);
         account.setUser(user);
         accountService.addAccount(account);
-        return "operations";
+        userService.addUser(user);
+        return "/operations";
     }
 
+    //forward to add_category
     @RequestMapping("/add_category")
-    public String addCategory(Model model) {
+    public String addCategoryShow(Model model) {
         return "add_category";
     }
+
+    //add new category
+    @RequestMapping("/add_categories")
+    public String addCategory(Model model, @RequestParam String name) {
+        Category category = new Category();
+        category.setName(name);
+        categoryService.addCategory(category);
+        return "add_category";
+    }
+
+    //show categories
+    @RequestMapping("/categories")
+    public String showCategories(Model model) {
+        model.addAttribute("categories", categoryService.listCategories());
+        return "categories";
+    }
+
+    @RequestMapping(value = {"/edit-category-{id}"}, method = RequestMethod.GET)
+    public String editCategory(@PathVariable Long id, ModelMap model) {
+        Category category = categoryService.findCategory(id);
+        model.addAttribute("category", category);
+        model.addAttribute("edit", true);
+        return "add_category";
+    }
+
+    @RequestMapping(value = {"/delete-category-{id}"}, method = RequestMethod.GET)
+    public String deleteCategory(@PathVariable Long id, ModelMap model) {
+        try {
+            categoryService.deleteCategory(id);
+        } catch (Exception e) {
+        }
+        model.addAttribute("categories", categoryService.listCategories());
+        return "categories";
+    }
+
 
     @RequestMapping("/add_operation")
     public String addOperation(Model model) {
@@ -90,7 +131,7 @@ public class AppController {
 
     @RequestMapping("/operations")
     public String operations(Model model) {
-        return "add_operation";
+        return "/operations";
     }
 
 }

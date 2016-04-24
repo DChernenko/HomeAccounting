@@ -12,7 +12,36 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="generic-container">
+   <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><span class="lead">List of Categories </span></div>
+       <div class="well">
+           <a href="<c:url value="/add_category" />">Add new categry</a>
+       </div>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Name Category</th>
+                <th width="100"></th>
+                <th width="100"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${categories}" var="category">
+                <tr>
+                    <td>${category.name}</td>
+                    <td><a href="<c:url value='/edit-category-${category.id}' />"
+                           class="btn btn-success custom-width">edit</a></td>
+                    <td><a href="<c:url value='/delete-category-${category.id}' />" class="btn btn-danger custom-width">delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 
+</div>
 
 </body>
 </html>

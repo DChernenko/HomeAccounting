@@ -14,11 +14,15 @@
 <body>
 <div class="container" style="width: 300px;">
     <h1>Add category</h1>
-    <form action="/add_category" method="get">
-        <input type="text" class="form-control pagination" name="group_name" placeholder="Enter category name" required
+    <form action="/add_categories" method="get">
+        <input type="hidden" name="id" id="id"/>
+        <input type="text" class="form-control pagination" name="name" placeholder="Enter category name" required
                autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">add</button>
     </form>
+</div>
+<div class="well">
+    <a href="<c:url value="/categories" />">Show categries</a>
 </div>
 </body>
 </html>

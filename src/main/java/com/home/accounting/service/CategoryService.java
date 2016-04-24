@@ -10,8 +10,10 @@ public interface CategoryService {
     void editCategory(Category category);
 
     void deleteCategory(long id);
+
     /*void delete(Category category);*/
     /* void delete(long[] id);*/
+    Category findCategory(long id);
 
     List<Category> listCategories();
 

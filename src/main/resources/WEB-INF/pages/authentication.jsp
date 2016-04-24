@@ -19,10 +19,10 @@
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" class="form-control pagination" name="user_name" placeholder="Email address" required
                autofocus
-               value="devcolibri">
+               value="login">
         <p style="color:red;">${errorMessage}</p>
         <input type="password" class="form-control pagination" name="password" placeholder="Password" required
-               value="1234">
+               value="login">
         <button class="btn btn-lg btn-primary btn-block pagination" type="submit">Войти</button>
     </form>
     <a href="/registration">registration</a><br>
