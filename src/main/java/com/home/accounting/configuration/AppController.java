@@ -8,13 +8,18 @@ import com.home.accounting.service.CategoryService;
 import com.home.accounting.service.OperationService;
 import com.home.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 public class AppController {
@@ -27,6 +32,8 @@ public class AppController {
     @Autowired
     private CategoryService categoryService;
     private User user;
+    @Autowired
+    MessageSource messageSource;
 
     /*@RequestMapping("/")*/
     public String onHome(Model model) {
@@ -83,19 +90,57 @@ public class AppController {
         return "/operations";
     }
 
-    //forward to add_category
-    @RequestMapping("/add_category")
-    public String addCategoryShow(Model model) {
+
+    //Category
+    @RequestMapping(value = "/add_category", method = RequestMethod.GET)
+    public String newCategory(Model model) {
+        Category category = new Category();
+        model.addAttribute("category", category);
+        model.addAttribute("edit", false);
         return "add_category";
     }
 
-    //add new category
-    @RequestMapping("/add_categories")
-    public String addCategory(Model model, @RequestParam String name) {
-        Category category = new Category();
-        category.setName(name);
+    @RequestMapping(value = {"/add_category"}, method = RequestMethod.POST)
+    public String saveCategory(Model model, @Valid Category category, BindingResult result) {
+        if (result.hasErrors()) return "add_category";
+        if (!categoryService.isCategoryUnique(category)) {
+            FieldError ssoError = new FieldError("category", "name", "Таке значення існує введіть інше значення." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+            result.addError(ssoError);
+            return "add_category";
+        }
         categoryService.addCategory(category);
+        model.addAttribute("categories", categoryService.listCategories());
+        return "redirect:/categories";
+    }
+
+
+    @RequestMapping(value = {"/edit-category-{id}"}, method = RequestMethod.GET)
+    public String editCategory(@PathVariable long id, ModelMap model) {
+        Category category = categoryService.findCategory(id);
+        model.addAttribute("category", category);
+        model.addAttribute("edit", true);
         return "add_category";
+    }
+
+    @RequestMapping(value = {"/edit-category-{id}"}, method = RequestMethod.POST)
+    public String updateCategory(@Valid Category category, BindingResult result,
+                                 ModelMap model, @PathVariable long id) {
+        if (result.hasErrors()) return "add_category";
+        if (!categoryService.isCategoryUnique(category)) {
+            FieldError ssoError = new FieldError("category", "name", "Таке значення існує введіть інше значення." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+            result.addError(ssoError);
+            return "add_category";
+        }
+        categoryService.editCategory(category);
+        model.addAttribute("categories", categoryService.listCategories());
+        return "categories";
+    }
+
+    @RequestMapping(value = {"/delete-category-{id}"}, method = RequestMethod.GET)
+    public String deleteCategory(@PathVariable Long id, ModelMap model) {
+        categoryService.deleteCategory(id);
+        model.addAttribute("categories", categoryService.listCategories());
+        return "redirect:/categories";
     }
 
     //show categories
@@ -105,33 +150,17 @@ public class AppController {
         return "categories";
     }
 
-    @RequestMapping(value = {"/edit-category-{id}"}, method = RequestMethod.GET)
-    public String editCategory(@PathVariable Long id, ModelMap model) {
-        Category category = categoryService.findCategory(id);
-        model.addAttribute("category", category);
-        model.addAttribute("edit", true);
-        return "add_category";
-    }
-
-    @RequestMapping(value = {"/delete-category-{id}"}, method = RequestMethod.GET)
-    public String deleteCategory(@PathVariable Long id, ModelMap model) {
-        try {
-            categoryService.deleteCategory(id);
-        } catch (Exception e) {
-        }
-        model.addAttribute("categories", categoryService.listCategories());
-        return "categories";
-    }
-
 
     @RequestMapping("/add_operation")
     public String addOperation(Model model) {
+        model.addAttribute("categories", categoryService.listCategories());
         return "add_operation";
     }
 
     @RequestMapping("/operations")
     public String operations(Model model) {
-        return "/operations";
+        return "operations";
     }
+
 
 }

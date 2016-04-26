@@ -1,5 +1,7 @@
 package com.home.accounting.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,11 +9,9 @@ import javax.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    /* @NotEmpty
-     @Min(value = 4)
-     @Max(value = 10)*/
+    @NotEmpty
     private String name;
 
     @OneToOne(mappedBy = "category")
@@ -21,7 +21,11 @@ public class Category {
     public Category() {
     }
 
-    public long getId() {
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -39,5 +43,21 @@ public class Category {
 
     public void setOperation(Operation operation) {
         this.operation = operation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        return name != null ? name.equals(category.name) : category.name == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }

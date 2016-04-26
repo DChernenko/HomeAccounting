@@ -2058,7 +2058,7 @@ textarea.input-lg {
 
 .form-horizontal .form-group:before, .form-horizontal .form-group:after {
     display: table;
-    content: " "
+    content: ""
 }
 
 .form-horizontal .form-group:after {

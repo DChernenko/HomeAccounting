@@ -36,7 +36,18 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findCategoryByName(String name) {
+        return categoryRepository.findCategoryByName(name);
+    }
+
+    @Override
     public List<Category> listCategories() /*получаем все данные с БД*/ {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public boolean isCategoryUnique(Category category) {
+        Category categoryFind = findCategoryByName(category.getName());
+        return (categoryFind == null || ((category.getId() != null) && (category.getId()==categoryFind.getId())));
     }
 }

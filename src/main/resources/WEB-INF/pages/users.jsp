@@ -16,7 +16,7 @@
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Categories </span></div>
         <div class="well">
-            <a href="<c:url value="/add_category" />">Add new category</a>
+            <a href="<c:url value="/registration" />">Add new user</a>
         </div>
         <table class="table table-hover">
             <thead>

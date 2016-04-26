@@ -15,7 +15,10 @@ public interface CategoryService {
     /* void delete(long[] id);*/
     Category findCategory(long id);
 
+    Category findCategoryByName(String name);
+
     List<Category> listCategories();
 
+    boolean isCategoryUnique(Category category);
 
 }

@@ -28,6 +28,7 @@
     <a href="/registration">registration</a><br>
     <a href="/add_category">add category </a><br>
     <a href="/add_operation">operation</a><br>
+    <a href="/categories">categories</a><br>
 </div>
 
 </body>
