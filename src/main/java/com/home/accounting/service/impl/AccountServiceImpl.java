@@ -1,7 +1,6 @@
 package com.home.accounting.service.impl;
 
 import com.home.accounting.entity.Account;
-import com.home.accounting.entity.Operation;
 import com.home.accounting.entity.User;
 import com.home.accounting.repository.AccountRepository;
 import com.home.accounting.service.AccountService;
