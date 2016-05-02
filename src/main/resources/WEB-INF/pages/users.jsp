@@ -14,25 +14,32 @@
 <body>
 <div class="generic-container">
     <div class="panel panel-default">
-        <div class="panel-heading"><span class="lead">List of Categories </span></div>
+        <div class="panel-heading"><span class="lead">List of Users</span></div>
         <div class="well">
             <a href="<c:url value="/registration" />">Add new user</a>
         </div>
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>Name Category</th>
+                <th>Login</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Age</th>
                 <th width="100"></th>
                 <th width="100"></th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${categories}" var="category">
+            <c:forEach items="${users}" var="user">
                 <tr>
-                    <td>${category.name}</td>
-                    <td><a href="<c:url value='/edit-category-${category.id}' />"
+                    <td>${user.login}</td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.age}</td>
+                    <td><a href="<c:url value='/edit-user-${user.id}' />"
                            class="btn btn-success custom-width">edit</a></td>
-                    <td><a href="<c:url value='/delete-category-${category.id}' />" class="btn btn-danger custom-width">delete</a>
+                    <td><a href="<c:url value='/delete-user-${user.id}' />"
+                           class="btn btn-danger custom-width">delete</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -40,6 +47,5 @@
         </table>
     </div>
 </div>
-
 </body>
 </html>

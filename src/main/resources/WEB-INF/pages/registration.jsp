@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,6 +27,7 @@
     </c:choose>
 
     <form:form method="POST" modelAttribute="user" class="form-horizontal">
+        <form:input type="hidden" path="id" id="id" class="form-control input-sm"/>
         <div class="row">
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="login">Login:</label>
@@ -37,7 +40,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="password">Password:</label>
                 <div class="col-sm-10">
-                    <form:input type="text" path="password" id="password" class="form-control input-sm"/>
+                    <form:input type="password" path="password" id="password" class="form-control input-sm"/>
                     <div class="has-error"><form:errors path="password" class="has-error help-block"/></div>
                 </div>
             </div>
@@ -70,58 +73,17 @@
                     <c:choose>
                         <c:when test="${edit}">
                             <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a
-                                href="<c:url value="/operations" />">Cancel</a>
+                                href="<c:url value="redirect:/authentication" />">Cancel</a>
                         </c:when>
                         <c:otherwise>
                             <input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a
-                                href="<c:url value="/operations" />">Cancel</a>
+                                href="<c:url value="redirect:/authentication" />">Cancel</a>
                         </c:otherwise>
                     </c:choose>
                 </div>
             </div>
         </div>
     </form:form>
-
-    <%-- <form class="form-horizontal" role="form" action="/add_user" method="post">
-         <div class="form-group ">
-             <label class="control-label col-sm-2 " for="login">Login:</label>
-             <div class="col-sm-10">
-                 <input type="text" class="form-control" id="login" placeholder="Enter login" name="login" value="login">
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="control-label col-sm-2 " for="pwd">Password:</label>
-             <div class="col-sm-10">
-                 <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password"
-                        value="login">
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="control-label col-sm-2" for="email">Email:</label>
-             <div class="col-sm-10">
-                 <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
-                        value="login@gmail.com">
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="control-label col-sm-2" for="name">Name:</label>
-             <div class="col-sm-10">
-                 <input type="text" class="form-control" id="name" placeholder="Enter full name" name="full_name"
-                        value="Petrych Petrych">
-             </div>
-         </div>
-         <div class="form-group">
-             <label class="control-label col-sm-2" for="name">Age:</label>
-             <div class="col-sm-10">
-                 <input type="text" class="form-control" id="age" placeholder="Enter age" name="age" value="18">
-             </div>
-         </div>
-         <div class="form-group">
-             <div class="col-sm-offset-2 col-sm-10">
-                 <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
-             </div>
-         </div>
-     </form>--%>
 </div>
 </body>
 </html>

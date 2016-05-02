@@ -29,6 +29,7 @@
     <a href="/add_category">add category </a><br>
     <a href="/add_operation">operation</a><br>
     <a href="/categories">categories</a><br>
+    <a href="/users">users</a><br>
 </div>
 
 </body>

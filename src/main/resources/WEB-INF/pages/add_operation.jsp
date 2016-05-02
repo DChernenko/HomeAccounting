@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,45 +15,66 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-horizontal" role="form" action="/add_operations" method="post">
-        <h1>Add operation</h1>
-        <div class="form-group ">
-            <label class="control-label col-sm-2 " for="sum">Sum: </label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="sum" placeholder="Enter sum" name="sum" value="10">
+    <c:choose>
+        <c:when test="${edit}">
+            <h1>Update operation</h1>
+        </c:when>
+        <c:otherwise>
+            <h1>Add operation</h1>
+        </c:otherwise>
+    </c:choose>
+    <form:form method="POST" modelAttribute="category" class="form-horizontal">
+        <form:input type="hidden" path="id" id="id"/>
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-sm-2 " for="sum">Sum:</label>
+                <div class="col-sm-10">
+                    <form:input type="text" path="sum" id="sum" class="form-control input-sm"/>
+                    <div class="has-error"><form:errors path="sum" class="has-error help-block"/></div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2 " for="date">Date: </label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="date" placeholder="Enter date" name="date"
-                       value="22/12/2016" pattern="\d{1,2}/\d{1,2}/\d{4}">
+            <div class="form-group">
+                <label class="control-label col-sm-2 " for="date">Date:</label>
+                <div class="col-sm-10">
+                    <form:input type="text" path="date" id="date" class="form-control input-sm"/>
+                    <div class="has-error"><form:errors path="date" class="has-error help-block"/></div>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2 " for="date">Cate:</label>
-            <div class="col-sm-10">
-                <select class="selectpicker form-control " name="group">
-                    <c:forEach items="${categories}" var="category">
-                        <option value="${category.id}">${category.name}</option>
-                    </c:forEach>
-                </select>
+            <div class="form-group">
+                <label class="control-label col-sm-2 " for="date">Category:</label>
+                <div class="col-sm-10">
+                    <form:select path="category" class="selectpicker form-control" id="category">
+                        <c:forEach items="${categories}" var="category">
+                            <form:option
+                                    value="${category.id}">${category.name}</form:option> <%-- <option value="${category.id}">${category.name}</option>--%>
+                        </c:forEach>
+                    </form:select>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2 " for="date">Type of operation:</label>
-            <div class="col-sm-10">
-                <input type="radio" name="costs" value="true">Costs<br>
-                <input type="radio" name="costs" value="false">Income<br>
+            <div class="form-group">
+                <label class="control-label col-sm-2 " for="date">Type of operation:</label>
+                <div class="col-sm-10">
+                    <form:radiobutton path="flagProfit" value="true">Profit</form:radiobutton>
+                    <form:radiobutton path="flagProfit" value="false">Costs</form:radiobutton>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
-            </div>
-        </div>
-    </form>
-</div>
 
+            <div class="form-group">
+                <div class="form-actions right-container">
+                    <c:choose>
+                        <c:when test="${edit}">
+                            <input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a
+                                href="<c:url value="/operations" />">Cancel</a>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="submit" value="Add" class="btn btn-primary btn-sm"/> or <a
+                                href="<c:url value="/operations" />">Cancel</a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+    </form:form>
+</div>
 </body>
 </html>

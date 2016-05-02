@@ -41,13 +41,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> listCategories() /*получаем все данные с БД*/ {
+    public List<Category> listAllCategories() /*получаем все данные с БД*/ {
         return categoryRepository.findAll();
     }
 
     @Override
     public boolean isCategoryUnique(Category category) {
-        Category categoryFind = findCategoryByName(category.getName());
-        return (categoryFind == null || ((category.getId() != null) && (category.getId()==categoryFind.getId())));
+        //Category categoryFind = findCategoryByName(category.getName());
+        return category.equals(findCategoryByName(category.getName())); //(categoryFind == null || ((category.getId() != null) && (category.getId()==categoryFind.getId())));
     }
 }

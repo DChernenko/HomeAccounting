@@ -1,6 +1,10 @@
 package com.home.accounting.entity;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "authorizations")
@@ -9,25 +13,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    /*@NotEmpty*/
+    @NotEmpty
     @Column(name = "login")
     private String login;
 
-    /*@NotEmpty*/
+    @NotEmpty
     private String password;
 
-    /*@NotEmpty*/
+    @NotEmpty
     @Column(name = "full_name")
     private String fullName;
 
-    /*@NotEmpty
-    @Max(150)
+    @NotNull
+   /* @Max(150)
     @Min(16)
     @Size(min = 1, max = 200)*/
     private Integer age;
 
-    /*@NotEmpty
-    @Email*/
+    @NotEmpty
+    @Email
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
@@ -87,5 +91,29 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (fullName != null ? !fullName.equals(user.fullName) : user.fullName != null) return false;
+        if (age != null ? !age.equals(user.age) : user.age != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        return account != null ? account.equals(user.account) : user.account == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = login != null ? login.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (account != null ? account.hashCode() : 0);
+        return result;
     }
 }
