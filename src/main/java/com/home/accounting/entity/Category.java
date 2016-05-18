@@ -3,6 +3,7 @@ package com.home.accounting.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -13,9 +14,13 @@ public class Category {
 
     @NotEmpty
     private String name;
+    /*
 
-    @OneToOne(mappedBy = "category", optional = false)
-    private Operation operation;
+        @OneToOne(mappedBy = "category", optional = false)
+        private Operation operation;
+    */
+    @ManyToMany(mappedBy = "categories")
+    private List<Operation> operations;
 
 
     public Category() {
@@ -37,12 +42,12 @@ public class Category {
         this.name = name;
     }
 
-    public Operation getOperation() {
-        return operation;
+    public List<Operation> getOperations() {
+        return operations;
     }
 
-    public void setOperation(Operation operation) {
-        this.operation = operation;
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
     }
 
     @Override

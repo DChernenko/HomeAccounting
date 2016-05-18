@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -215,11 +217,13 @@ public class AppController {
     }
 
     @RequestMapping(value = {"/add_operation"}, method = RequestMethod.POST)
-    public String saveOperation(Model model, @RequestParam(value = "category") long id, @Valid Operation operation, BindingResult result) {
+    public String saveOperation(Model model, @RequestParam(value = "categories") long id, @Valid Operation operation, BindingResult result) {
         model.addAttribute("categories", categoryService.listAllCategories());
         //if (result.hasErrors()) return "add_operation";
         Category category = categoryService.findCategory(id);
-        operation.setCategory(category);
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        operation.setCategories(categories);
         operation.setAccount(user.getAccount());
         operationService.addOperation(operation);
         return "redirect:/operations";

@@ -3,6 +3,8 @@ package com.home.accounting.entity;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
+import java.util.List;
 
 @Entity
 @Table(name = "operations")
@@ -15,16 +17,23 @@ public class Operation {
     /*@NotEmpty*/
     private double sum;
 
-
+    @Null
     private LocalDate date;
 
     /*@NotEmpty*/
     @Column(name = "flag_profit")
     private boolean flagProfit; /*profit - true, costs - false */
-
+/*
     @OneToOne
     @JoinColumn(name = "category_id", unique = false, nullable = false, updatable = false)
-    private Category category;
+    private Category category;*/
+
+    @ManyToMany/*(cascade = CascadeType.ALL)*/(fetch = FetchType.EAGER)
+    @JoinTable(name = "operations_cagegories",
+            joinColumns = @JoinColumn(name = "operation_id"/*, referencedColumnName = "id"*/),
+            inverseJoinColumns = @JoinColumn(name = "category_id"/*, referencedColumnName = "id"*/))
+    private List<Category> categories;
+
 
     @ManyToOne(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)/*{CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}*/
     @JoinColumn(name = "account_id", nullable = false, unique = false/*, insertable = false*/)
@@ -57,12 +66,12 @@ public class Operation {
         this.flagProfit = flagProfit;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public Account getAccount() {

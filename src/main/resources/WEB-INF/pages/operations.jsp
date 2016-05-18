@@ -44,7 +44,8 @@
                         </c:otherwise>
                     </c:choose>
                     </td>
-                    <td>${operation.category.name}</td>
+                        <%-- <td>${operation.categories.name}</td>--%>
+                    <td><c:forEach items="${operation.categories}" var="categories">${categories.name}</c:forEach></td>
                     <td>${operation.date}</td>
                     <td><a href="<c:url value='/edit-operation-${operation.id}' />"
                            class="btn btn-success custom-width">edit</a></td>
