@@ -1,5 +1,6 @@
 package com.home.accounting.service.impl;
 
+import com.home.accounting.entity.Account;
 import com.home.accounting.entity.Operation;
 import com.home.accounting.repository.OperationRepository;
 import com.home.accounting.service.OperationService;
@@ -26,7 +27,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void delete(long id) {
+    public void deleteOperation(long id) {
         operationRepository.delete(id);
     }
 
@@ -36,14 +37,14 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Operation getIdOperation(long id) {
+    public Operation findOperation(long id) {
         return operationRepository.findOne(id);
     }
 
-    /*@Override
-    public List<Operation> getAccountOperations(Account account) {
-        return operationRepository.fi;
-    }*/
+    @Override
+    public List<Operation> findAccountOperations(Account account) {
+        return operationRepository.findAccountOperation(account);
+    }
 
 
 }

@@ -11,5 +11,5 @@ public interface AccountService {
 
     void editAccount(Account account);
 
-    void getBalance(User user);
+    Account getBalance(User user);
 }

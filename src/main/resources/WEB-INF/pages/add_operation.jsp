@@ -23,7 +23,7 @@
             <h1>Add operation</h1>
         </c:otherwise>
     </c:choose>
-    <form:form method="POST" modelAttribute="category" class="form-horizontal">
+    <form:form method="POST" modelAttribute="operation" class="form-horizontal">
         <form:input type="hidden" path="id" id="id"/>
         <div class="row">
             <div class="form-group">
@@ -36,29 +36,53 @@
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="date">Date:</label>
                 <div class="col-sm-10">
-                    <form:input type="text" path="date" id="date" class="form-control input-sm"/>
+                    <form:input type="date" path="date" id="date" class="form-control input-sm"/>
                     <div class="has-error"><form:errors path="date" class="has-error help-block"/></div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="date">Category:</label>
                 <div class="col-sm-10">
-                    <form:select path="category" class="selectpicker form-control" id="category">
+                        <%--<form:select path="category"
+                                     class="selectpicker form-control"
+                                     id="category" items="${categories}"
+                                     itemLabel="name" itemValue="id">
+
+                        </form:select>--%>
+                        <%--             <form:select path="category">
+                                         <c:forEach items="${categories}" var="category">
+                                             <form:option value="category">${category.name}</form:option>
+                                         </c:forEach>
+                                     </form:select>--%>
+                        <%--    <form:select path="category">
+                                <form:options items="${categories}" itemValue="id" itemLabel="name"/>
+                            </form:select>--%>
+                    <form:select path="category"
+                                 class="selectpicker form-control"
+                                 items="${categories}"
+                                 itemLabel="name" itemValue="id"/>
+
+
+                        <%--  <form:select path="category" class="selectpicker form-control" id="category">
                         <c:forEach items="${categories}" var="category">
                             <form:option
-                                    value="${category.id}">${category.name}</form:option> <%-- <option value="${category.id}">${category.name}</option>--%>
+                                    value="${category.id}">${category.name}</form:option> &lt;%&ndash; <option value="${category.id}">${category.name}</option>&ndash;%&gt;
                         </c:forEach>
-                    </form:select>
+                    </form:select>--%>
+                        <%--
+                                            <form:select class="form-control" path="site">
+                                            <form:option value="-1">Select...</form:option>
+                                            <form:options items="${categoryList}" itemValue="categoryID" itemLabel="categoryName"/>
+                                            </form:select>--%>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="date">Type of operation:</label>
                 <div class="col-sm-10">
-                    <form:radiobutton path="flagProfit" value="true">Profit</form:radiobutton>
-                    <form:radiobutton path="flagProfit" value="false">Costs</form:radiobutton>
+                    <form:radiobutton path="flagProfit" value="true" id="flagProfit"/> Profit <br>
+                    <form:radiobutton path="flagProfit" value="false" id="flagProfit"/> Costs
                 </div>
             </div>
-
             <div class="form-group">
                 <div class="form-actions right-container">
                     <c:choose>

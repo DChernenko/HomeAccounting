@@ -2,6 +2,7 @@ package com.home.accounting.configuration;
 
 import com.home.accounting.entity.Account;
 import com.home.accounting.entity.Category;
+import com.home.accounting.entity.Operation;
 import com.home.accounting.entity.User;
 import com.home.accounting.service.AccountService;
 import com.home.accounting.service.CategoryService;
@@ -46,48 +47,18 @@ public class AppController {
         return "authentication";
     }
 
-    /*registration new user*/
-  /*  @RequestMapping("/registration")
-    public String registration(Model model) {
-        return "registration";
-    }  *//*authentication_action user*/
-
     @RequestMapping("/authentication_action")
     public String authenticationAction(Model model, @RequestParam(value = "user_name") String userName, @RequestParam String password) {
         User user = userService.findUserByName(userName);
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 model.addAttribute("user", user);
+                this.user = user;
                 return "redirect:/operations";
             }
         }
         model.addAttribute("errorMessage", "No such user");
         return "redirect:/authentication";
-    }
-
-    @RequestMapping("/add_user")
-    public String addUser(Model model, @RequestParam String login,
-                          @RequestParam String password, @RequestParam String email,
-                          @RequestParam(value = "full_name") String fullName, @RequestParam int age) {
-        User userFind = userService.findUserByName(login);
-        if (userFind != null) {
-            model.addAttribute("errorLogin", "This login using");
-            return "redirect:/registration";
-        }
-        User user = new User();
-        user.setAge(age);
-        user.setEmail(email);
-        user.setFullName(fullName);
-        user.setPassword(password);
-        user.setLogin(login);
-        userService.addUser(user);
-        Account account = new Account();
-        user.setAccount(account);
-        account.setBalance(0);
-        account.setUser(user);
-        accountService.addAccount(account);
-        userService.addUser(user);
-        return "redirect:/operations";
     }
 
     //User
@@ -117,11 +88,8 @@ public class AppController {
             }
             return "registration";
         }
-        userService.addUser(user);
         Account account = new Account();
-        account.setUser(user);
         user.setAccount(account);
-        accountService.addAccount(account);
         userService.addUser(user);
         model.addAttribute("user", user);
         return "redirect:/authentication";
@@ -188,7 +156,7 @@ public class AppController {
     @RequestMapping(value = {"/add_category"}, method = RequestMethod.POST)
     public String saveCategory(Model model, @Valid Category category, BindingResult result) {
         if (result.hasErrors()) return "add_category";
-        if (!categoryService.isCategoryUnique(category)) {
+        if (categoryService.isCategoryUnique(category)) {
             FieldError ssoError = new FieldError("category", "name", "Таке значення існує введіть інше значення." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
             result.addError(ssoError);
             return "add_category";
@@ -235,15 +203,55 @@ public class AppController {
         return "categories";
     }
 
-
-    @RequestMapping("/add_operation")
-    public String addOperation(Model model) {
+    //Operation
+    @RequestMapping(value = "/add_operation", method = RequestMethod.GET)
+    public String newOperation(Model model) {
+        Operation operation = new Operation();
+        //operation.setAccount(user.getAccount());
+        model.addAttribute("operation", operation);
         model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("edit", false);
         return "add_operation";
     }
 
+    @RequestMapping(value = {"/add_operation"}, method = RequestMethod.POST)
+    public String saveOperation(Model model, @RequestParam(value = "category") long id, @Valid Operation operation, BindingResult result) {
+        model.addAttribute("categories", categoryService.listAllCategories());
+        //if (result.hasErrors()) return "add_operation";
+        Category category = categoryService.findCategory(id);
+        operation.setCategory(category);
+        operation.setAccount(user.getAccount());
+        operationService.addOperation(operation);
+        return "redirect:/operations";
+    }
+
+    @RequestMapping(value = {"/edit-operation-{id}"}, method = RequestMethod.GET)
+    public String editOperation(@PathVariable long id, ModelMap model) {
+        Operation operation = operationService.findOperation(id);
+        model.addAttribute("operation", operation);
+        model.addAttribute("edit", true);
+        return "redirect:/add_operation";
+    }
+
+    @RequestMapping(value = {"/edit-operation-{id}"}, method = RequestMethod.POST)
+    public String updateOperation(@Valid Operation operation, BindingResult result,
+                                  ModelMap model, @PathVariable long id) {
+        operationService.editOperation(operation);
+        return "redirect:/operations";
+    }
+
+    @RequestMapping(value = {"/delete-operation-{id}"}, method = RequestMethod.GET)
+    public String deleteOperation(@PathVariable long id, ModelMap model) {
+        operationService.deleteOperation(id);
+        model.addAttribute("operations", operationService.findAccountOperations(user.getAccount()));
+        return "redirect:/operations";
+    }
+
+
     @RequestMapping("/operations")
     public String operations(Model model) {
+        model.addAttribute("balance", accountService.getBalance(user).getBalance());
+        model.addAttribute("operations", operationService.findAccountOperations(user.getAccount()));
         return "operations";
     }
 

@@ -14,7 +14,7 @@ public class Category {
     @NotEmpty
     private String name;
 
-    @OneToOne(mappedBy = "category")
+    @OneToOne(mappedBy = "category", optional = false)
     private Operation operation;
 
 

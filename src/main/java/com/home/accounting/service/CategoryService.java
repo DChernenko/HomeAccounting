@@ -11,8 +11,8 @@ public interface CategoryService {
 
     void deleteCategory(long id);
 
-    /*void delete(Category category);*/
-    /* void delete(long[] id);*/
+    /*void deleteOperation(Category category);*/
+    /* void deleteOperation(long[] id);*/
     Category findCategory(long id);
 
     Category findCategoryByName(String name);

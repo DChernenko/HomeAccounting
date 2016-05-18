@@ -10,36 +10,34 @@ public class Operation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     /*@NotEmpty*/
     private double sum;
 
-    /*@NotEmpty*/
+
     private LocalDate date;
 
     /*@NotEmpty*/
     @Column(name = "flag_profit")
     private boolean flagProfit; /*profit - true, costs - false */
 
-
-    @OneToOne(optional = false)
-    @JoinColumn(name = "category_id"/*, unique = true, nullable = false, updatable = false*/)
+    @OneToOne
+    @JoinColumn(name = "category_id", unique = false, nullable = false, updatable = false)
     private Category category;
 
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "account_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)/*{CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}*/
+    @JoinColumn(name = "account_id", nullable = false, unique = false/*, insertable = false*/)
     private Account account;
 
     public Operation() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -73,5 +71,14 @@ public class Operation {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    @Temporal(TemporalType.DATE)
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

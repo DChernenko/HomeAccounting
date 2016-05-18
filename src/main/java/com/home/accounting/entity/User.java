@@ -34,10 +34,11 @@ public class User {
     @Email
     private String email;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", unique = true, nullable = true, updatable = true)
     private Account account;
 
+    /*optional которой говорит JPA, является ли значение в этом поле обязательным или нет.*/
     public User() {
     }
 

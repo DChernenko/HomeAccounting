@@ -15,11 +15,10 @@ public class Account {
     /*@Min(value = 1)*/
     private double balance;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "account")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "account", optional = false)
     private User user;
 
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.ALL)
     private List<Operation> operations = new ArrayList<Operation>();
 
     public Account() {

@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void getBalance(User user) {
-        accountRepository.findOne(user.getAccount().getId());
+    public Account getBalance(User user) {
+        return accountRepository.findOne(user.getAccount().getId());
     }
 }

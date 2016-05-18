@@ -26,7 +26,6 @@ import javax.sql.DataSource;
 @EnableWebMvc
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("com.home.accounting.repository")
-/*@EnableJpaRepositories*/
 @EnableTransactionManagement
 public class AppConfig {
     @Bean
@@ -71,7 +70,6 @@ public class AppConfig {
         ds.setUrl("jdbc:mysql://localhost:3306/homeAccounting");
         ds.setUsername("root");
         ds.setPassword("root");
-
         return ds;
     }
 

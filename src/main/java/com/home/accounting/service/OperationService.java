@@ -1,5 +1,6 @@
 package com.home.accounting.service;
 
+import com.home.accounting.entity.Account;
 import com.home.accounting.entity.Operation;
 
 import java.util.List;
@@ -10,15 +11,15 @@ public interface OperationService {
 
     void editOperation(Operation operation);
 
-/*    void delete(Operation operation);*/
+/*    void deleteOperation(Operation operation);*/
 
-    void delete(long id);
+    void deleteOperation(long id);
 
-    /*void delete(long[] id);*/
+    /*void deleteOperation(long[] id);*/
 
     List<Operation> getAllOperations();
 
-    Operation getIdOperation(long id);
+    Operation findOperation(long id);
 
-   /* List<Operation> getAccountOperations(Account account);*/
+    List<Operation> findAccountOperations(Account account);
 }
