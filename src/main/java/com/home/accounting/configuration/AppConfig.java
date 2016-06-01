@@ -1,10 +1,12 @@
 package com.home.accounting.configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -24,10 +26,13 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.home.accounting")
 @EnableWebMvc
-@PropertySource("classpath:application.properties")
+@PropertySource(value = { "classpath:application.properties" })
 @EnableJpaRepositories("com.home.accounting.repository")
 @EnableTransactionManagement
 public class AppConfig {
+    @Autowired
+    private Environment environment;
+
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
@@ -69,7 +74,8 @@ public class AppConfig {
         ds.setDriverClassName("com.mysql.jdbc.Driver");
         ds.setUrl("jdbc:mysql://localhost:3306/homeAccounting");
         ds.setUsername("root");
-        ds.setPassword("root");
+        ds.setPassword(environment.getRequiredProperty("db.password"));
+        //ds.setPassword("root");
         return ds;
     }
 

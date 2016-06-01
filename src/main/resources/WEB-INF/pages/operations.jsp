@@ -19,6 +19,7 @@
         <div class="panel-heading"><span class="lead">Balnce:${balance}</span></div>
         <div class="well">
             <a href="<c:url value="/add_operation" />">Add new operation</a>
+            <a href="<c:url value="/add_category" />">Add category</a>
         </div>
         <table class="table table-hover">
             <thead>

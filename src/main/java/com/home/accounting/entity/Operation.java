@@ -23,10 +23,6 @@ public class Operation {
     /*@NotEmpty*/
     @Column(name = "flag_profit")
     private boolean flagProfit; /*profit - true, costs - false */
-/*
-    @OneToOne
-    @JoinColumn(name = "category_id", unique = false, nullable = false, updatable = false)
-    private Category category;*/
 
     @ManyToMany/*(cascade = CascadeType.ALL)*/(fetch = FetchType.EAGER)
     @JoinTable(name = "operations_cagegories",

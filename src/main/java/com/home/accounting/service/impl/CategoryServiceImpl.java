@@ -1,6 +1,7 @@
 package com.home.accounting.service.impl;
 
 import com.home.accounting.entity.Category;
+import com.home.accounting.entity.User;
 import com.home.accounting.repository.CategoryRepository;
 import com.home.accounting.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> listAllCategories() /*получаем все данные с БД*/ {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<Category> listCategoriesByUser(User user) {
+        return categoryRepository.findCategoriesByUser(user);
     }
 
     @Override

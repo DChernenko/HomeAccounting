@@ -10,6 +10,8 @@ import com.home.accounting.service.OperationService;
 import com.home.accounting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@PropertySource(value = {"classpath:messages.properties"})
 public class AppController {
     @Autowired
     private AccountService accountService;
@@ -37,6 +40,8 @@ public class AppController {
     private User user;
     @Autowired
     MessageSource messageSource;
+    @Autowired
+    private Environment environment;
 
     /*@RequestMapping("/")*/
     public String onHome(Model model) {
@@ -85,7 +90,7 @@ public class AppController {
                 result.addError(ssoError);
             }
             if (email) {
-                ssoError = new FieldError("user", "email", "Таке значення існує введіть інше значення." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+                ssoError = new FieldError("user", "email", environment.getRequiredProperty("non.unique.ssoId")/*"Таке значення існує введіть інше значення." *//*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
                 result.addError(ssoError);
             }
             return "registration";
@@ -163,8 +168,9 @@ public class AppController {
             result.addError(ssoError);
             return "add_category";
         }
+        category.setUser(user);
         categoryService.addCategory(category);
-        model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         return "redirect:/categories";
     }
 
@@ -187,21 +193,23 @@ public class AppController {
             return "redirect:/add_category";
         }
         categoryService.editCategory(category);
-        model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         return "redirect:/categories";
     }
 
     @RequestMapping(value = {"/delete-category-{id}"}, method = RequestMethod.GET)
     public String deleteCategory(@PathVariable Long id, ModelMap model) {
         categoryService.deleteCategory(id);
-        model.addAttribute("categories", categoryService.listAllCategories());
+        //model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         return "redirect:/categories";
     }
 
     //show categories
     @RequestMapping("/categories")
     public String showCategories(Model model) {
-        model.addAttribute("categories", categoryService.listAllCategories());
+        // model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         return "categories";
     }
 
@@ -209,16 +217,15 @@ public class AppController {
     @RequestMapping(value = "/add_operation", method = RequestMethod.GET)
     public String newOperation(Model model) {
         Operation operation = new Operation();
-        //operation.setAccount(user.getAccount());
         model.addAttribute("operation", operation);
-        model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         model.addAttribute("edit", false);
         return "add_operation";
     }
 
     @RequestMapping(value = {"/add_operation"}, method = RequestMethod.POST)
     public String saveOperation(Model model, @RequestParam(value = "categories") long id, @Valid Operation operation, BindingResult result) {
-        model.addAttribute("categories", categoryService.listAllCategories());
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         //if (result.hasErrors()) return "add_operation";
         Category category = categoryService.findCategory(id);
         List<Category> categories = new ArrayList<>();
@@ -226,6 +233,8 @@ public class AppController {
         operation.setCategories(categories);
         operation.setAccount(user.getAccount());
         operationService.addOperation(operation);
+        useBalance();
+        model.addAttribute("balance", accountService.getBalance(user).getBalance());
         return "redirect:/operations";
     }
 
@@ -241,12 +250,16 @@ public class AppController {
     public String updateOperation(@Valid Operation operation, BindingResult result,
                                   ModelMap model, @PathVariable long id) {
         operationService.editOperation(operation);
+        useBalance();
+        model.addAttribute("balance", accountService.getBalance(user).getBalance());
         return "redirect:/operations";
     }
 
     @RequestMapping(value = {"/delete-operation-{id}"}, method = RequestMethod.GET)
     public String deleteOperation(@PathVariable long id, ModelMap model) {
         operationService.deleteOperation(id);
+        useBalance();
+        model.addAttribute("balance", accountService.getBalance(user).getBalance());
         model.addAttribute("operations", operationService.findAccountOperations(user.getAccount()));
         return "redirect:/operations";
     }
@@ -254,10 +267,23 @@ public class AppController {
 
     @RequestMapping("/operations")
     public String operations(Model model) {
+        useBalance();
         model.addAttribute("balance", accountService.getBalance(user).getBalance());
         model.addAttribute("operations", operationService.findAccountOperations(user.getAccount()));
         return "operations";
     }
 
+    private void useBalance() {
+        List<Operation> operations = operationService.findAccountOperations(user.getAccount());
+        double sumAdd = 0;
+        double sumSub = 0;
+
+        for (Operation operation : operations) {
+            if (operation.isFlagProfit()) sumAdd += operation.getSum();
+            else sumSub += operation.getSum();
+        }
+        user.getAccount().setBalance(sumAdd - sumSub);
+        accountService.editAccount(user.getAccount());
+    }
 
 }

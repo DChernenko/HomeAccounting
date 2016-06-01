@@ -21,13 +21,22 @@ public class Category {
     */
     @ManyToMany(mappedBy = "categories")
     private List<Operation> operations;
-
+    @ManyToOne
+    private User user;
 
     public Category() {
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getId() {

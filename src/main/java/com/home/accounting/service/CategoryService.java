@@ -1,6 +1,7 @@
 package com.home.accounting.service;
 
 import com.home.accounting.entity.Category;
+import com.home.accounting.entity.User;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface CategoryService {
     Category findCategoryByName(String name);
 
     List<Category> listAllCategories();
+
+    List<Category> listCategoriesByUser(User user);
 
     boolean isCategoryUnique(Category category);
 

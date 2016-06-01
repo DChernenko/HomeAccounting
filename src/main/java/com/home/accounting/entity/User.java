@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "authorizations")
@@ -37,6 +38,11 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", unique = true, nullable = true, updatable = true)
     private Account account;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id")
+    private List<Category> categorise;
+
 
     /*optional которой говорит JPA, является ли значение в этом поле обязательным или нет.*/
     public User() {
@@ -92,6 +98,14 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public List<Category> getCategorise() {
+        return categorise;
+    }
+
+    public void setCategorise(List<Category> categorise) {
+        this.categorise = categorise;
     }
 
     @Override
