@@ -44,10 +44,17 @@
             <div class="form-group">
                 <label class="control-label col-sm-2 " for="date">Category:</label>
                 <div class="col-sm-10">
-                    <form:select path="categories"
-                                 class="selectpicker form-control"
-                                 items="${categories}"
-                                 itemLabel="name" itemValue="id" multiple="false"/>
+                    <c:choose>
+                        <c:when test="${empty categories}">
+                            <a href="<c:url value="/add_category" />">Add category</a>
+                        </c:when>
+                        <c:otherwise>
+                            <form:select path="categories"
+                                         class="selectpicker form-control"
+                                         items="${categories}"
+                                         itemLabel="name" itemValue="id" multiple="false"/>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <div class="form-group">

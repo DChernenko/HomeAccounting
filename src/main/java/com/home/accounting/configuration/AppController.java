@@ -296,7 +296,6 @@ public class AppController {
         List<Operation> operations = operationService.findAccountOperations(user.getAccount());
         double sumAdd = 0;
         double sumSub = 0;
-
         for (Operation operation : operations) {
             if (operation.isFlagProfit()) sumAdd += operation.getSum();
             else sumSub += operation.getSum();

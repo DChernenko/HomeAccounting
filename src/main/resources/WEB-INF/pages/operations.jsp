@@ -14,13 +14,14 @@
 <body>
 <div class="generic-container">
     <div class="panel panel-default">
-        <div class="panel-heading"><span class="lead">List of Operations </span></div>
-        <span class="lead">Balnce:${balance}</span>
-        <div class="panel-heading"></div>
-            <ul class="nav nav-tabs">
-                <li><a href="<c:url value="/add_operation" />">Add operation</a></li>
-                <li><a href="<c:url value="/categories" />">Categories</a></li>
-            </ul>
+
+        <div class="panel-heading"><span class="lead">List of Operations </span> <a style="position: absolute; right: 10px;" href="<c:url value="/"/>">out</a></div>
+        <div class="panel-heading"><span class="lead" <%--style="position: absolute; right: 0px;"--%>>Balnce:${balance}</span></div>
+
+        <ul class="nav nav-tabs">
+            <li><a href="<c:url value="/add_operation" />">Add operation</a></li>
+            <li><a href="<c:url value="/categories" />">Categories</a></li>
+        </ul>
         <table class="table table-hover">
             <thead>
             <tr>

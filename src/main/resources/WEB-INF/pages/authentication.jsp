@@ -23,7 +23,7 @@
         <p style="color:red;">${errorMessage}</p>
         <input type="password" class="form-control pagination" name="password" placeholder="Password" required
                value="login">
-        <button class="btn btn-lg btn-primary btn-block pagination" type="submit">Войти</button>
+        <button class="btn btn-lg btn-primary btn-block pagination" type="submit">enter</button>
     </form>
     <a href="/registration">registration</a><br>
     <a href="/add_category">add category </a><br>
