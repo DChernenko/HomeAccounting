@@ -17,19 +17,19 @@
 <div class="container" style="width: 300px;">
     <form action="/authentication_action" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="form-control pagination" name="user_name" placeholder="Email address" required
-               autofocus
+        <input type="text" class="form-control pagination" name="user_name" placeholder="Login" required autofocus
                value="login">
         <p style="color:red;">${errorMessage}</p>
         <input type="password" class="form-control pagination" name="password" placeholder="Password" required
                value="login">
-        <button class="btn btn-lg btn-primary btn-block pagination" type="submit">enter</button>
+        <button class="btn btn-lg btn-primary btn-block pagination" type="submit">Sign in</button>
+        <a href="/registration">registration</a>
     </form>
-    <a href="/registration">registration</a><br>
-    <a href="/add_category">add category </a><br>
-    <a href="/add_operation">operation</a><br>
-    <a href="/categories">categories</a><br>
-    <a href="/users">users</a><br>
+
+    <%-- <a href="/add_category">add category </a><br>
+     <a href="/add_operation">operation</a><br>
+     <a href="/categories">categories</a><br>
+     <a href="/users">users</a><br>--%>
 </div>
 
 </body>
