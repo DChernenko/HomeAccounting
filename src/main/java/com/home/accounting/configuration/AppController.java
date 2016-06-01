@@ -8,6 +8,7 @@ import com.home.accounting.service.AccountService;
 import com.home.accounting.service.CategoryService;
 import com.home.accounting.service.OperationService;
 import com.home.accounting.service.UserService;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -224,9 +227,16 @@ public class AppController {
     }
 
     @RequestMapping(value = {"/add_operation"}, method = RequestMethod.POST)
-    public String saveOperation(Model model, @RequestParam(value = "categories") long id, @Valid Operation operation, BindingResult result) {
+    public String saveOperation(Model model, @RequestParam(value = "categories") long id,
+                                @Valid Operation operation, BindingResult result/*,
+                                 @RequestParam(value = "date") LocalDate localDate*/
+            , @RequestParam(value = "date") String date) {
         model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         //if (result.hasErrors()) return "add_operation";
+        if (date.isEmpty()) date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        operation.setDate(new LocalDate(date));
+
         Category category = categoryService.findCategory(id);
         List<Category> categories = new ArrayList<>();
         categories.add(category);
@@ -241,14 +251,23 @@ public class AppController {
     @RequestMapping(value = {"/edit-operation-{id}"}, method = RequestMethod.GET)
     public String editOperation(@PathVariable long id, ModelMap model) {
         Operation operation = operationService.findOperation(id);
+        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
         model.addAttribute("operation", operation);
+        model.addAttribute("date", operation.getDate().toString());
         model.addAttribute("edit", true);
-        return "redirect:/add_operation";
+        return "add_operation";
     }
 
     @RequestMapping(value = {"/edit-operation-{id}"}, method = RequestMethod.POST)
     public String updateOperation(@Valid Operation operation, BindingResult result,
-                                  ModelMap model, @PathVariable long id) {
+                                  ModelMap model, @PathVariable long id, @RequestParam(value = "categories") long cagegory_id, @RequestParam(value = "date") String date) {
+        Category category = categoryService.findCategory(cagegory_id);
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+        if (date.isEmpty()) date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        operation.setDate(new LocalDate(date));
+        operation.setCategories(categories);
+        operation.setAccount(user.getAccount());
         operationService.editOperation(operation);
         useBalance();
         model.addAttribute("balance", accountService.getBalance(user).getBalance());

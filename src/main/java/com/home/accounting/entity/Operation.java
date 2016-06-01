@@ -3,7 +3,6 @@ package com.home.accounting.entity;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @Entity
@@ -17,7 +16,7 @@ public class Operation {
     /*@NotEmpty*/
     private double sum;
 
-    @Null
+   /* @Null*/
     private LocalDate date;
 
     /*@NotEmpty*/

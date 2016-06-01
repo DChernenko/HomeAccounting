@@ -17,9 +17,12 @@
 <div class="generic-container">
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">List of Categories </span></div>
-        <div class="well">
-            <a href="<c:url value="/add_category" />">Add new category</a>
-        </div>
+
+            <ul class="nav nav-pills">
+                <li><a href="<c:url value="/operations" />">Operations</a></li>
+                <li><a href="<c:url value="/add_category" />">Add category</a></li>
+            </ul>
+
         <table class="table table-hover">
             <thead>
             <tr>
