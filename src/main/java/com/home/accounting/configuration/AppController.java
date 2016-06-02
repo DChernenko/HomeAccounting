@@ -183,28 +183,38 @@ public class AppController {
         Category category = categoryService.findCategory(id);
         model.addAttribute("category", category);
         model.addAttribute("edit", true);
-        return "redirect:/add_category";
+        return "add_category";
     }
 
     @RequestMapping(value = {"/edit-category-{id}"}, method = RequestMethod.POST)
     public String updateCategory(@Valid Category category, BindingResult result,
                                  ModelMap model, @PathVariable long id) {
         if (result.hasErrors()) return "add_category";
-        if (!categoryService.isCategoryUnique(category)) {
+        if (categoryService.isCategoryUnique(category)) {
             FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
             result.addError(ssoError);
-            return "redirect:/add_category";
+            return "add_category";
         }
+        category.setUser(user);
         categoryService.editCategory(category);
         model.addAttribute("categories", categoryService.listCategoriesByUser(user));
-        return "redirect:/categories";
+        return "categories";
     }
 
     @RequestMapping(value = {"/delete-category-{id}"}, method = RequestMethod.GET)
     public String deleteCategory(@PathVariable Long id, ModelMap model) {
-        categoryService.deleteCategory(id);
+
+        try {
+            categoryService.deleteCategory(id);
+        } catch (Exception ex) {
+         //   FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+          // result.addError(ssoError);
+            return "redirect:/categories";
+        } finally {
+            model.addAttribute("categories", categoryService.listCategoriesByUser(user));
+        }
         //model.addAttribute("categories", categoryService.listAllCategories());
-        model.addAttribute("categories", categoryService.listCategoriesByUser(user));
+
         return "redirect:/categories";
     }
 

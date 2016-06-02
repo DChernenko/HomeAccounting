@@ -24,7 +24,7 @@ public class Operation {
     @Column(name = "flag_profit")
     private boolean flagProfit; /*profit - true, costs - false */
 
-    @ManyToMany/*(cascade = CascadeType.ALL)*/(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "operations_cagegories",
             joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
