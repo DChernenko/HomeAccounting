@@ -3,6 +3,7 @@ package com.home.accounting.entity;
 import org.joda.time.LocalDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class Operation {
     /*@NotEmpty*/
     private double sum;
 
-   /* @Null*/
+    /* @Null*/
     private LocalDate date;
 
     /*@NotEmpty*/
@@ -25,9 +26,9 @@ public class Operation {
 
     @ManyToMany/*(cascade = CascadeType.ALL)*/(fetch = FetchType.EAGER)
     @JoinTable(name = "operations_cagegories",
-            joinColumns = @JoinColumn(name = "operation_id"/*, referencedColumnName = "id"*/),
-            inverseJoinColumns = @JoinColumn(name = "category_id"/*, referencedColumnName = "id"*/))
-    private List<Category> categories;
+            joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+    private List<Category> categories = new ArrayList<>();
 
 
     @ManyToOne(fetch = FetchType.EAGER/*, cascade = CascadeType.ALL*/)/*{CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}*/

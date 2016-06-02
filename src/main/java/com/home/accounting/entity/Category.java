@@ -3,6 +3,7 @@ package com.home.accounting.entity;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,10 @@ public class Category {
         private Operation operation;
     */
     @ManyToMany(mappedBy = "categories")
-    private List<Operation> operations;
+/*    @JoinTable(name = "operations_cagegories",
+            joinColumns = @JoinColumn(name = "category_id_operarion"*//*, referencedColumnName = "id"*//*),
+            inverseJoinColumns = @JoinColumn(name = "operation_id"*//*, referencedColumnName = "id"*//*))*/
+    private List<Operation> operations = new ArrayList<>();
     @ManyToOne
     private User user;
 

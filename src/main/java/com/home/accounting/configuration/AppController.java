@@ -228,11 +228,10 @@ public class AppController {
 
     @RequestMapping(value = {"/add_operation"}, method = RequestMethod.POST)
     public String saveOperation(Model model, @RequestParam(value = "categories") long id,
-                                @Valid Operation operation, BindingResult result/*,
-                                 @RequestParam(value = "date") LocalDate localDate*/
+                                @Valid Operation operation, BindingResult result
             , @RequestParam(value = "date") String date) {
         model.addAttribute("categories", categoryService.listCategoriesByUser(user));
-        if (result.hasErrors()) return "add_operation";
+        //if (result.hasErrors()) return "add_operation";
         if (date.isEmpty()) date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         operation.setDate(new LocalDate(date));

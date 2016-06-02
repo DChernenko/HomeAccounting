@@ -71,9 +71,9 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://localhost:3306/homeAccounting");
-        ds.setUsername("root");
+        ds.setDriverClassName(environment.getRequiredProperty("db.driver"));
+        ds.setUrl(environment.getRequiredProperty("db.url"));
+        ds.setUsername(environment.getRequiredProperty("db.username"));
         ds.setPassword(environment.getRequiredProperty("db.password"));
         //ds.setPassword("root");
         return ds;
