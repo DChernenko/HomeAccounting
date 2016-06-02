@@ -15,15 +15,8 @@ public class Category {
 
     @NotEmpty
     private String name;
-    /*
 
-        @OneToOne(mappedBy = "category", optional = false)
-        private Operation operation;
-    */
     @ManyToMany(mappedBy = "categories")
-/*    @JoinTable(name = "operations_cagegories",
-            joinColumns = @JoinColumn(name = "category_id_operarion"*//*, referencedColumnName = "id"*//*),
-            inverseJoinColumns = @JoinColumn(name = "operation_id"*//*, referencedColumnName = "id"*//*))*/
     private List<Operation> operations = new ArrayList<>();
     @ManyToOne
     private User user;
