@@ -5,6 +5,7 @@ import com.home.accounting.entity.User;
 import com.home.accounting.repository.CategoryRepository;
 import com.home.accounting.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean isCategoryUnique(Category category) {
-        //Category categoryFind = findCategoryByName(category.getName());
-        return category.equals(findCategoryByName(category.getName())); //(categoryFind == null || ((category.getId() != null) && (category.getId()==categoryFind.getId())));
+        return category.equals(findCategoryByName(category.getName())); //(categoryFind == null || ((category.getId() != null) && (category.getId()==categoryFind.getId())));;
+    }
+
+    @Override
+    public boolean isCategoryUnique(Category category, User user) {
+        Category categ = categoryRepository.findCategoriesByUserAndName(user, category.getName());
+        if (categ == null) return true;
+        return category.equals(categ.getName());
     }
 }

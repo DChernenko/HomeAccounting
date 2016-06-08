@@ -24,4 +24,5 @@ public interface CategoryService {
 
     boolean isCategoryUnique(Category category);
 
+    boolean isCategoryUnique(Category category, User user);
 }

@@ -62,8 +62,8 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
 
         Category category = (Category) o;
-
-        return name != null ? name.equals(category.name) : category.name == null;
+        boolean fl = name != null ? name.equals(category.name) : category.name == null;
+        return fl;
 
     }
 

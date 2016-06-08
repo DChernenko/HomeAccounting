@@ -16,4 +16,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("Select c from Category c where c.user=:user")
     List<Category> findCategoriesByUser(@Param("user") User user);
 
+    @Query("Select c from Category c where c.user=:user and c.name=:name")
+    Category findCategoriesByUserAndName(@Param("user") User user,@Param("name") String name);
+
 }

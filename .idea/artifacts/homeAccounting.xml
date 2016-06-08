@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="unnamed">
-    <output-path>$PROJECT_DIR$/out/artifacts/unnamed</output-path>
-    <root id="root">
+  <artifact type="war" build-on-make="true" name="homeAccounting">
+    <output-path>$PROJECT_DIR$/out/artifacts/homeAccounting</output-path>
+    <root id="archive" name="homeAccounting.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: antlr:antlr:2.7.7" />
@@ -127,6 +127,7 @@
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:2.1.1" />
           <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache:1.2.3" />
           <element id="library" level="project" name="Maven: org.hibernate:hibernate:3.2.6.ga" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:4.0.2.RELEASE" />
         </element>
         <element id="directory" name="classes">
           <element id="module-output" name="HomeAccounting" />
