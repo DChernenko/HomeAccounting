@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Titleperations</title>
+    <title>Title operations</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" type="text/css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@
 
         <div class="panel-heading"><span class="lead">List of Operations </span> <a
                 style="position: absolute; right: 10px;" href="<c:url value="/"/>">Out</a></div>
-        <div class="panel-heading"><span class="lead">Balnce:${balance}</span></div>
+        <div class="panel-heading"><span class="lead">Balance:${balance}</span></div>
 
         <ul class="nav nav-tabs">
             <li><a href="<c:url value="/add_operation" />">Add operation</a></li>

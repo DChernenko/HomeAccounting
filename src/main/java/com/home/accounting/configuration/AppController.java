@@ -52,7 +52,7 @@ public class AppController {
     }
 
 
-    @RequestMapping(value = {"/", "authentication"})
+    @RequestMapping(value = {"/", "/authentication"})
     public String authentication(Model model) {
         return "authentication";
     }

@@ -49,6 +49,6 @@
         </div>
     </form:form>
 </div>
-<div class="well"><a href="<c:url value="/categories" />">Show categries</a></div>
+<div class="well"><a href="<c:url value="/categories" />">Show categories</a></div>
 </body>
 </html>
