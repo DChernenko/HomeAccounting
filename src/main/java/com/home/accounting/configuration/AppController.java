@@ -89,11 +89,11 @@ public class AppController {
         if (login || email) {
             FieldError ssoError;
             if (login) {
-                ssoError = new FieldError("user", "login", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+                ssoError = new FieldError("user", "login", "This value exists, enter another value.");
                 result.addError(ssoError);
             }
             if (email) {
-                ssoError = new FieldError("user", "email", environment.getRequiredProperty("non.unique.ssoId")/*"This value exists, enter another value." *//*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+                ssoError = new FieldError("user", "email", environment.getRequiredProperty("non.unique.ssoId"));
                 result.addError(ssoError);
             }
             return "registration";
@@ -124,11 +124,11 @@ public class AppController {
         if (!login || !email) {
             FieldError ssoError;
             if (login) {
-                ssoError = new FieldError("user", "login", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+                ssoError = new FieldError("user", "login", "This value exists, enter another value." );
                 result.addError(ssoError);
             }
             if (email) {
-                ssoError = new FieldError("user", "email", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+                ssoError = new FieldError("user", "email", "This value exists, enter another value.");
                 result.addError(ssoError);
             }
             return "redirect:/registration";
@@ -167,7 +167,7 @@ public class AppController {
     public String saveCategory(Model model, @Valid Category category, BindingResult result) {
         if (result.hasErrors()) return "add_category";
         if (!categoryService.isCategoryUnique(category, user)) {
-            FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+            FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value.");
             result.addError(ssoError);
             return "add_category";
         }
@@ -191,7 +191,7 @@ public class AppController {
                                  ModelMap model, @PathVariable long id) {
         if (result.hasErrors()) return "add_category";
         if (!categoryService.isCategoryUnique(category, user)) {
-            FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value." /*messageSource.getMessage("non.unique.ssoId", new String[]{category.getName()}, Locale.getDefault())*/);
+            FieldError ssoError = new FieldError("category", "name", "This value exists, enter another value.");
             result.addError(ssoError);
             return "add_category";
         }
